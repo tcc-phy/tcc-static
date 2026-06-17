@@ -1,0 +1,6 @@
+@import "tailwindcss";
+
+@theme inline {
+    --font-text: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+    --font-display: var(--font-dm-serif), serif;
+}
