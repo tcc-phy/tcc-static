@@ -1,0 +1,11 @@
+export const ISSUE_PAGE_WIDTH = 1240;
+export const ISSUE_PAGE_HEIGHT = 1754;
+
+export const COLLEGE_COVER_IMG_WIDTH = 512;
+export const COLLEGE_COVER_IMG_HEIGHT = 512;
+
+export const SOCIETY_COVER_IMG_WIDTH = 512;
+export const SOCIETY_COVER_IMG_HEIGHT = 512;
+
+export const USER_PROFILE_IMG_WIDTH = 512;
+export const USER_PROFILE_IMG_HEIGHT = 512;

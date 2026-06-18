@@ -1,0 +1,228 @@
+{
+    "issues": [
+        {
+            "id": "nj19tz89gm3du34m02g4za91",
+            "name": "Issue 01",
+            "title": "Origins of Light",
+            "coverImageUrl": "/assets/images/issue/nj19tz89gm3du34m02g4za91/coverImg.webp",
+            "abstract": "An introductory exploration of fundamental physics concepts, tracing the behavior of light, motion, and matter through classic experiments and modern interpretations.",
+            "tags": ["physics", "light", "foundations"],
+            "pages": [
+                {
+                    "pageNumber": 1,
+                    "imageUrl": "/assets/images/issue/nj19tz89gm3du34m02g4za91/page-1.webp"
+                },
+                {
+                    "pageNumber": 2,
+                    "imageUrl": "/assets/images/issue/nj19tz89gm3du34m02g4za91/page-2.webp"
+                },
+                {
+                    "pageNumber": 3,
+                    "imageUrl": "/assets/images/issue/nj19tz89gm3du34m02g4za91/page-3.webp"
+                },
+                {
+                    "pageNumber": 4,
+                    "imageUrl": "/assets/images/issue/nj19tz89gm3du34m02g4za91/page-4.webp"
+                },
+                {
+                    "pageNumber": 5,
+                    "imageUrl": "/assets/images/issue/nj19tz89gm3du34m02g4za91/page-5.webp"
+                },
+                {
+                    "pageNumber": 6,
+                    "imageUrl": "/assets/images/issue/nj19tz89gm3du34m02g4za91/page-6.webp"
+                },
+                {
+                    "pageNumber": 7,
+                    "imageUrl": "/assets/images/issue/nj19tz89gm3du34m02g4za91/page-7.webp"
+                },
+                {
+                    "pageNumber": 8,
+                    "imageUrl": "/assets/images/issue/nj19tz89gm3du34m02g4za91/page-8.webp"
+                },
+                {
+                    "pageNumber": 9,
+                    "imageUrl": "/assets/images/issue/nj19tz89gm3du34m02g4za91/page-9.webp"
+                },
+                {
+                    "pageNumber": 10,
+                    "imageUrl": "/assets/images/issue/nj19tz89gm3du34m02g4za91/page-10.webp"
+                }
+            ],
+            "releaseDate": "2026-03-31"
+        },
+        {
+            "id": "mae2yuld3wah3uie1maom49g",
+            "name": "Issue 02",
+            "title": "Forces of Nature",
+            "coverImageUrl": "/assets/images/society/mae2yuld3wah3uie1maom49g/coverImg.webp",
+            "abstract": "A deeper dive into classical mechanics and natural forces shaping the physical world, from gravity to motion and energy interactions.",
+            "tags": ["physics", "forces", "mechanics"],
+            "pages": [
+                {
+                    "pageNumber": 1,
+                    "imageUrl": "/assets/images/issue/mae2yuld3wah3uie1maom49g/page-1.webp"
+                },
+                {
+                    "pageNumber": 2,
+                    "imageUrl": "/assets/images/issue/mae2yuld3wah3uie1maom49g/page-2.webp"
+                },
+                {
+                    "pageNumber": 3,
+                    "imageUrl": "/assets/images/issue/mae2yuld3wah3uie1maom49g/page-3.webp"
+                },
+                {
+                    "pageNumber": 4,
+                    "imageUrl": "/assets/images/issue/mae2yuld3wah3uie1maom49g/page-4.webp"
+                },
+                {
+                    "pageNumber": 5,
+                    "imageUrl": "/assets/images/issue/mae2yuld3wah3uie1maom49g/page-5.webp"
+                },
+                {
+                    "pageNumber": 6,
+                    "imageUrl": "/assets/images/issue/mae2yuld3wah3uie1maom49g/page-6.webp"
+                },
+                {
+                    "pageNumber": 7,
+                    "imageUrl": "/assets/images/issue/mae2yuld3wah3uie1maom49g/page-7.webp"
+                },
+                {
+                    "pageNumber": 8,
+                    "imageUrl": "/assets/images/issue/mae2yuld3wah3uie1maom49g/page-8.webp"
+                },
+                {
+                    "pageNumber": 9,
+                    "imageUrl": "/assets/images/issue/mae2yuld3wah3uie1maom49g/page-9.webp"
+                },
+                {
+                    "pageNumber": 10,
+                    "imageUrl": "/assets/images/issue/mae2yuld3wah3uie1maom49g/page-10.webp"
+                },
+                {
+                    "pageNumber": 11,
+                    "imageUrl": "/assets/images/issue/mae2yuld3wah3uie1maom49g/page-11.webp"
+                },
+                {
+                    "pageNumber": 12,
+                    "imageUrl": "/assets/images/issue/mae2yuld3wah3uie1maom49g/page-12.webp"
+                },
+                {
+                    "pageNumber": 13,
+                    "imageUrl": "/assets/images/issue/mae2yuld3wah3uie1maom49g/page-13.webp"
+                },
+                {
+                    "pageNumber": 14,
+                    "imageUrl": "/assets/images/issue/mae2yuld3wah3uie1maom49g/page-14.webp"
+                },
+                {
+                    "pageNumber": 15,
+                    "imageUrl": "/assets/images/issue/mae2yuld3wah3uie1maom49g/page-15.webp"
+                }
+            ],
+            "releaseDate": "2026-05-13"
+        }
+    ],
+    "colleges": [],
+    "societies": [
+        {
+            "id": "psw12b5tjv0rkgc5lyl271ec",
+            "name": "Science Forum",
+            "coverImgUrl": "/assets/images/society/psw12b5tjv0rkgc5lyl271ec/coverImg.webp"
+        },
+        {
+            "id": "ty66v24m9hihj9zjn35bmgjm",
+            "name": "Photon Club",
+            "coverImgUrl": "/assets/images/society/ty66v24m9hihj9zjn35bmgjm/coverImg.webp"
+        },
+        {
+            "id": "xwt5od37wkp49a5tej8d61cw",
+            "name": "Stellar Physics Society",
+            "coverImgUrl": "/assets/images/society/xwt5od37wkp49a5tej8d61cw/coverImg.webp"
+        },
+        {
+            "id": "opzwle1bpefbobirgaxsoeim",
+            "name": "Apex Physics Guild",
+            "coverImgUrl": "/assets/images/society/opzwle1bpefbobirgaxsoeim/coverImg.webp"
+        }
+    ],
+    "team": [
+        {
+            "id": "v6u93zog6408e0zmee7gkw44",
+            "name": "John David",
+            "profileImgUrl": "/assets/images/team/v6u93zog6408e0zmee7gkw44/profileImg.webp",
+            "teamName": "MARKETING",
+            "socials": {
+                "linkedInUrl": "linkedin.com",
+                "twitterUrl": "x.com"
+            }
+        },
+        {
+            "id": "w5k1gnqijvojrtkpdf4hqn7w",
+            "name": "Anna Rose",
+            "profileImgUrl": "/assets/images/team/w5k1gnqijvojrtkpdf4hqn7w/profileImg.webp",
+            "teamName": "MARKETING",
+            "socials": {
+                "instagramUrl": "instagram.com"
+            }
+        },
+        {
+            "id": "saywfo8hvs1zbc0thqequepv",
+            "name": "Mark Thomas",
+            "profileImgUrl": "/assets/images/team/saywfo8hvs1zbc0thqequepv/profileImg.webp",
+            "teamName": "OUTREACH",
+            "socials": {
+                "twitterUrl": "x.com",
+                "instagramUrl": "instagram.com"
+            }
+        },
+        {
+            "id": "h7d8h1psk93oxd0lbwii3kmi",
+            "name": "Sarah Joy",
+            "profileImgUrl": "/assets/images/team/h7d8h1psk93oxd0lbwii3kmi/profileImg.webp",
+            "teamName": "DESIGN",
+            "socials": {
+                "linkedInUrl": "linkedin.com",
+                "instagramUrl": "instagram.com"
+            }
+        },
+        {
+            "id": "l7ad323z9xlmgvu9cu1dql81",
+            "name": "Luke James",
+            "profileImgUrl": "/assets/images/team/l7ad323z9xlmgvu9cu1dql81/profileImg.webp",
+            "teamName": "DESIGN",
+            "socials": {
+                "linkedInUrl": "linkedin.com"
+            }
+        },
+        {
+            "id": "yrntvzriy0ob05b3u4o512qu",
+            "name": "Paul Andrew",
+            "profileImgUrl": "/assets/images/team/yrntvzriy0ob05b3u4o512qu/profileImg.webp",
+            "teamName": "MARKETING",
+            "socials": {
+                "instagramUrl": "instagram.com"
+            }
+        },
+        {
+            "id": "mnl86r5gyray0yffmywuklom",
+            "name": "Mary Grace",
+            "profileImgUrl": "/assets/images/team/mnl86r5gyray0yffmywuklom/profileImg.webp",
+            "teamName": "MARKETING",
+            "socials": {
+                "linkedInUrl": "linkedin.com",
+                "twitterUrl": "x.com",
+                "instagramUrl": "instagram.com"
+            }
+        },
+        {
+            "id": "gp02u5yj0aw6n0pwj0k7qyr9",
+            "name": "Emma Faith",
+            "profileImgUrl": "/assets/images/team/gp02u5yj0aw6n0pwj0k7qyr9/profileImg.webp",
+            "teamName": "DESIGN",
+            "socials": {
+                "twitterUrl": "x.com"
+            }
+        }
+    ]
+}
