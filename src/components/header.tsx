@@ -1,93 +1,101 @@
 "use client";
 
-import Link from "next/link";
 import { useState } from "react";
-import { HiMenu, HiX } from "react-icons/hi";
+import Link from "next/link";
+import { Button } from "@/components";
+import { RxHamburgerMenu } from "react-icons/rx";
 
-const Header = () => {
-    const [open, setOpen] = useState(false);
-
-    const linkClass =
-        "text-sm lg:text-base transition-colors hover:text-primary hover:underline";
+export const Header = () => {
+    const [isOpen, setIsOpen] = useState(false);
 
     return (
-        <header className="bg-bg-card">
-            <div className="flex items-center justify-between px-4 sm:px-8 md:px-10 lg:px-12 py-4">
-                <div className="font-display tracking-wider text-lg md:text-base lg:text-xl">
-                    The Confluence Chronicles
+        <header className="w-full bg-bg-card border-b border-border sticky top-0 z-50 transition-colors duration-300">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16">
+                <div className="shrink-0 flex items-center">
+                    <Link
+                        href="/"
+                        className="font-display text-2xl tracking-tight text-text hover:text-text-muted transition-colors"
+                    >
+                        Confluence Chronicles
+                    </Link>
                 </div>
-                <div className="hidden md:flex gap-4 lg:gap-6">
-                    <Link className={linkClass} href={"/"}>
+
+                <nav className="hidden md:flex space-x-4 lg:space-x-8">
+                    <Link
+                        href="/"
+                        className="text-text hover:text-primary transition-colors font-medium"
+                    >
                         Home
                     </Link>
-                    <Link className={linkClass} href={"/archive"}>
+                    <Link
+                        href="/archive"
+                        className="text-text hover:text-primary transition-colors font-medium"
+                    >
                         Archive
                     </Link>
-                    <Link className={linkClass} href={"/team"}>
+                    <Link
+                        href="/team"
+                        className="text-text hover:text-primary transition-colors font-medium"
+                    >
                         Team
                     </Link>
-                </div>
+                </nav>
 
-                <div className="hidden md:flex gap-2 lg:gap-3">
-                    <div className="px-3 py-1 border border-primary rounded text-sm lg:text-base w-fit">
+                <div className="hidden lg:flex items-center space-x-4">
+                    <Button variant="outline">Contact Us</Button>
+                    <Button variant="primary">Sign Up</Button>
+                </div>
+                <div className="hidden md:flex lg:hidden items-center space-x-4">
+                    <Button variant="outline" size="small">
                         Contact Us
-                    </div>
-                    <div className="px-3 py-1 bg-primary text-text-inverse rounded text-sm lg:text-base w-fit">
+                    </Button>
+                    <Button variant="primary" size="small">
                         Sign Up
-                    </div>
+                    </Button>
                 </div>
 
-                <button
-                    className="md:hidden text-2xl"
-                    onClick={() => setOpen(!open)}
-                >
-                    {open ? <HiX /> : <HiMenu />}
-                </button>
+                <div className="md:hidden relative flex items-center">
+                    <Button
+                        variant="ghost"
+                        onClick={() => setIsOpen(!isOpen)}
+                        className="text-text hover:text-primary p-2"
+                    >
+                        <RxHamburgerMenu className="w-6 h-6" />
+                    </Button>
+
+                    {isOpen && (
+                        <div className="absolute right-0 top-full mt-2 w-56 z-50 bg-bg-card border border-border rounded-lg shadow-lg p-4 space-y-3">
+                            <Link
+                                href="/"
+                                className="block text-text hover:text-primary font-medium"
+                            >
+                                Home
+                            </Link>
+                            <Link
+                                href="/archive"
+                                className="block text-text hover:text-primary font-medium"
+                            >
+                                Archive
+                            </Link>
+                            <Link
+                                href="/team"
+                                className="block text-text hover:text-primary font-medium"
+                            >
+                                Team
+                            </Link>
+
+                            <div className="border-t border-border pt-3 space-y-2">
+                                <Button variant="outline" className="w-full">
+                                    Contact Us
+                                </Button>
+                                <Button variant="primary" className="w-full">
+                                    Sign Up
+                                </Button>
+                            </div>
+                        </div>
+                    )}
+                </div>
             </div>
-
-            {open && (
-                <div className="md:hidden px-4 pb-4 flex flex-col gap-3">
-                    <Link
-                        className={linkClass}
-                        href={"/"}
-                        onClick={() => setOpen(false)}
-                    >
-                        Home
-                    </Link>
-
-                    <Link
-                        className={linkClass}
-                        href={"/archive"}
-                        onClick={() => setOpen(false)}
-                    >
-                        Archive
-                    </Link>
-
-                    <Link
-                        className={linkClass}
-                        href={"/team"}
-                        onClick={() => setOpen(false)}
-                    >
-                        Team
-                    </Link>
-
-                    <Link
-                        className={linkClass}
-                        href={"#"}
-                        onClick={() => setOpen(false)}
-                    >
-                        Contact Us
-                    </Link>
-
-                    <Link
-                        className={linkClass}
-                        href={"#"}
-                        onClick={() => setOpen(false)}
-                    >
-                        Sign Up
-                    </Link>
-                </div>
-            )}
         </header>
     );
 };

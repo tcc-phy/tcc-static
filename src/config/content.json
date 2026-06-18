@@ -4,6 +4,7 @@
             "id": "nj19tz89gm3du34m02g4za91",
             "name": "Issue 01",
             "title": "Origins of Light",
+            "slug": "issue-01",
             "coverImageUrl": "/assets/images/issue/nj19tz89gm3du34m02g4za91/coverImg.webp",
             "abstract": "An introductory exploration of fundamental physics concepts, tracing the behavior of light, motion, and matter through classic experiments and modern interpretations.",
             "tags": ["physics", "light", "foundations"],
@@ -55,7 +56,8 @@
             "id": "mae2yuld3wah3uie1maom49g",
             "name": "Issue 02",
             "title": "Forces of Nature",
-            "coverImageUrl": "/assets/images/society/mae2yuld3wah3uie1maom49g/coverImg.webp",
+            "slug": "issue-02",
+            "coverImageUrl": "/assets/images/issue/mae2yuld3wah3uie1maom49g/coverImg.webp",
             "abstract": "A deeper dive into classical mechanics and natural forces shaping the physical world, from gravity to motion and energy interactions.",
             "tags": ["physics", "forces", "mechanics"],
             "pages": [

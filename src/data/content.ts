@@ -38,6 +38,10 @@ class ContentStore {
         return this.issues.find((i) => i.id === id);
     }
 
+    getIssueBySlug(slug: string): Issue | undefined {
+        return this.issues.find((i) => i.slug === slug);
+    }
+
     getIssueCount(): number {
         return this.issues.length;
     }

@@ -1,15 +1,15 @@
 import type { Metadata } from "next";
-import { DM_Serif_Display, Inter } from "next/font/google";
+import { Inter, Source_Serif_4 } from "next/font/google";
 import "@/styles/globals.css";
 
 const inter = Inter({
     subsets: ["latin"],
     variable: "--font-inter",
 });
-const dmSerif = DM_Serif_Display({
+const dmSerif = Source_Serif_4({
     subsets: ["latin"],
     weight: "400",
-    variable: "--font-dm-serif",
+    variable: "--font-source-serif-4",
 });
 
 interface RootLayoutProps {

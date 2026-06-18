@@ -7,12 +7,20 @@ export type Issue = {
     id: string;
     name: string;
     title: string;
+    slug: string;
     coverImageUrl: string | null;
     abstract: string;
     tags: string[];
     pages: IssuePage[];
     releaseDate: Date;
 }
+
+export type Review = {
+    id: string;
+    authorName: string;
+    content: string;
+    date: Date;
+};
 
 export type College = {
     id: string;

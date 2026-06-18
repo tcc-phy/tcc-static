@@ -1,14 +1,15 @@
-import Footer from "@/components/footer";
-import Header from "@/components/header";
+import contentStore from "@/data/content";
+import HomePageClient from "./client";
 
-const HomePage = () => {
+const IssuePage = async () => {
+    const latestIssue = contentStore.getLatestIssue()!;
+    const societies = contentStore.getAllSocieties();
+
     return (
         <>
-            <Header />
-            Home Page
-            <Footer />
+            <HomePageClient latestIssue={latestIssue} societies={societies} />
         </>
     );
 };
 
-export default HomePage;
+export default IssuePage;
