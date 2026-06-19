@@ -1,11 +1,156 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import Image from "next/image";
+import { useState, useRef, forwardRef, useEffect } from "react";
 import { Divider, Button, Footer, Header } from "@/components";
+import { IoIosCloseCircleOutline } from "react-icons/io";
 // import { Review } from "@/types/data.types";
 import { ISSUE_PAGE_WIDTH, ISSUE_PAGE_HEIGHT } from "@/config/constants";
 import contentStore from "@/data/content";
 import { notFound } from "next/navigation";
+import { Issue, IssuePage } from "@/types/data.types";
+const HTMLFlipBook = dynamic(() => import("react-pageflip"), { ssr: false });
+
+const IssueFlipBook = forwardRef<HTMLDivElement, IssuePage>(
+    ({ imageUrl, pageNumber }, ref) => {
+        return (
+            <div
+                ref={ref}
+                className="bg-bg-card border border-border shadow-inner relative w-full h-full select-none flex flex-col items-center justify-center overflow-hidden"
+                data-density="soft"
+            >
+                <div className="relative w-full h-full aspect-1240/1754 flex items-center justify-center p-2 bg-neutral-900/5">
+                    <Image
+                        src={imageUrl || "/placeholder.png"}
+                        alt={`Page ${pageNumber}`}
+                        width={ISSUE_PAGE_WIDTH}
+                        height={ISSUE_PAGE_HEIGHT}
+                        className="aspect-1240/1754 object-contain pointer-events-none shadow"
+                        loading="lazy"
+                    />
+                </div>
+            </div>
+        );
+    },
+);
+
+interface IssueModalProps {
+    issue: Issue;
+    isOpen: boolean;
+    onClose: () => void;
+}
+
+const IssueModal = ({ issue, isOpen, onClose }: IssueModalProps) => {
+    const [isMobile, setIsMobile] = useState(false);
+    const bookRef = useRef<any>(null);
+
+    const handleBackdropClick = (e: React.MouseEvent<HTMLDivElement>) => {
+        if (e.target === e.currentTarget) {
+            onClose();
+        }
+    };
+
+    useEffect(() => {
+        if (!isOpen) return;
+
+        const checkBreakpoint = () => {
+            setIsMobile(window.innerWidth < 768);
+        };
+
+        const handleKeyDown = (e: KeyboardEvent) => {
+            if (!bookRef.current) return;
+
+            const pageFlipInstance = bookRef.current.pageFlip();
+            if (!pageFlipInstance) return;
+
+            if (e.key === "ArrowRight") {
+                pageFlipInstance.flipNext();
+            } else if (e.key === "ArrowLeft") {
+                pageFlipInstance.flipPrev();
+            } else if (e.key === "Escape") {
+                onClose();
+            }
+        };
+
+        checkBreakpoint();
+        window.addEventListener("resize", checkBreakpoint);
+        window.addEventListener("keydown", handleKeyDown);
+
+        return () => {
+            window.removeEventListener("resize", checkBreakpoint);
+            window.removeEventListener("keydown", handleKeyDown);
+        };
+    }, [isOpen, onClose]);
+
+    if (!isOpen) return null;
+
+    const basePageWidth = isMobile ? 340 : 700;
+    const basePageHeight = isMobile ? 480 : 990;
+
+    return (
+        <div
+            className="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-8 transition-opacity duration-350"
+            onClick={handleBackdropClick}
+        >
+            <div className="relative flex flex-col items-center w-full max-w-5xl max-h-[90vh]">
+                <div className="w-full flex justify-end mb-4">
+                    <Button
+                        onClick={onClose}
+                        variant="noStyle"
+                        aria-label="Close Modal"
+                    >
+                        <IoIosCloseCircleOutline className="w-8 h-8 text-danger" />
+                    </Button>
+                </div>
+
+                <div
+                    className={`w-full mx-auto flex items-center justify-center max-h-[75vh] overflow-hidden ${
+                        isMobile
+                            ? "max-w-87.5 aspect-1240/1754"
+                            : "max-w-4xl aspect-2480/1754"
+                    }`}
+                >
+                    <HTMLFlipBook
+                        key={isMobile ? "portrait" : "landscape"}
+                        width={basePageWidth}
+                        height={basePageHeight}
+                        size="stretch"
+                        minWidth={200}
+                        maxWidth={1200}
+                        minHeight={280}
+                        maxHeight={1000}
+                        drawShadow={true}
+                        flippingTime={700}
+                        usePortrait={isMobile}
+                        showCover={false}
+                        className="mx-auto"
+                        style={{ width: "100%", height: "100%" }}
+                        startPage={0}
+                        maxShadowOpacity={0.4}
+                        mobileScrollSupport={true}
+                        clickEventForward={true}
+                        autoSize={true}
+                        ref={bookRef}
+                        startZIndex={0}
+                        useMouseEvents={true}
+                        swipeDistance={50}
+                        showPageCorners={false}
+                        disableFlipByClick={false}
+                    >
+                        {issue.pages.map((page) => (
+                            <IssueFlipBook
+                                key={page.pageNumber}
+                                imageUrl={page.imageUrl}
+                                pageNumber={page.pageNumber}
+                            />
+                        ))}
+                    </HTMLFlipBook>
+                </div>
+            </div>
+        </div>
+    );
+};
 
 const ReviewForm = () => {
     return (
@@ -95,6 +240,8 @@ interface IssuePageClientProps {
 }
 
 const IssuePageClient = ({ slug }: IssuePageClientProps) => {
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
     const issue = contentStore.getIssueBySlug(slug);
     if (!issue) {
         notFound();
@@ -116,10 +263,15 @@ const IssuePageClient = ({ slug }: IssuePageClientProps) => {
                     </time>
                 </div>
 
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
-                    <div className="lg:col-span-5 flex gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-16 items-start">
+                    <div className="md:col-span-5 flex gap-4">
                         <div className="flex flex-col gap-3 pt-8">
-                            <Button variant="vertical">Open</Button>
+                            <Button
+                                variant="vertical"
+                                onClick={() => setIsModalOpen(true)}
+                            >
+                                Open
+                            </Button>
                             <Button variant="verticalOutline">Share It</Button>
                         </div>
                         <div className="relative w-full aspect-1240/1754 border border-border shadow-md bg-bg-card">
@@ -134,7 +286,7 @@ const IssuePageClient = ({ slug }: IssuePageClientProps) => {
                         </div>
                     </div>
 
-                    <div className="lg:col-span-7 lg:pt-8">
+                    <div className="md:col-span-7 md:pt-8">
                         <div className="border-b border-border pb-4 mb-6">
                             <h2 className="font-display text-3xl text-text">
                                 Abstract
@@ -170,6 +322,12 @@ const IssuePageClient = ({ slug }: IssuePageClientProps) => {
                 </section>
             </main>
             <Footer />
+
+            <IssueModal
+                issue={issue}
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+            />
         </>
     );
 };
