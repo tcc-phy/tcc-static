@@ -1,8 +1,8 @@
-import contentStore from "@/data/content";
 import TeamPageClient from "./client";
+import { getAllTeamMembers } from "@/services";
 
 const IssuePage = async () => {
-    const team = contentStore.getAllTeamMembers();
+    const team = await getAllTeamMembers();
 
     return (
         <>

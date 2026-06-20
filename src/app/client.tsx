@@ -51,7 +51,11 @@ const HeroSection = () => {
     );
 };
 
-const LatestIssueSection = ({ issue }: { issue: Issue }) => {
+const LatestIssueSection = ({ issue }: { issue?: Issue }) => {
+    if (!issue) {
+        return null;
+    }
+
     return (
         <section
             id="latest-issue"
@@ -249,7 +253,7 @@ const SubscribeSection = () => {
 };
 
 interface HomePageClientProps {
-    latestIssue: Issue;
+    latestIssue?: Issue;
     societies: Society[];
 }
 

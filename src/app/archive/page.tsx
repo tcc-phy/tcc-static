@@ -1,9 +1,9 @@
 import ArchivePageClient from "./client";
-import contentStore from "@/data/content";
+import { getAllIssues, getAllTags } from "@/services";
 
-const IssuePage = async () => {
-    const issues = contentStore.getAllIssues();
-    const allTags = contentStore.getAllTags();
+const ArchivePage = async () => {
+    const issues = await getAllIssues();
+    const allTags = await getAllTags();
 
     return (
         <>
@@ -12,4 +12,4 @@ const IssuePage = async () => {
     );
 };
 
-export default IssuePage;
+export default ArchivePage;

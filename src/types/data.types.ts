@@ -11,8 +11,11 @@ export type Issue = {
     coverImageUrl: string | null;
     abstract: string;
     tags: string[];
-    pages: IssuePage[];
     releaseDate: Date;
+}
+
+export type IssueFilled = Issue & {
+    pages: IssuePage[];
 }
 
 export type Review = {
@@ -53,20 +56,4 @@ export type Team = {
         twitterUrl?: string;
         instagramUrl?: string;
     };
-}
-
-export type RawContent = {
-    issues: (Omit<Issue, "releaseDate"> & {
-        releaseDate: string;
-    })[];
-    colleges: College[];
-    societies: Society[];
-    team: Team[];
-}
-
-export type ParsedContent = {
-    issues: Issue[];
-    colleges: College[];
-    societies: Society[];
-    team: Team[];
 }

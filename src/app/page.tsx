@@ -1,9 +1,9 @@
-import contentStore from "@/data/content";
+import { getLatestIssue, getAllSocieties } from "@/services";
 import HomePageClient from "./client";
 
 const IssuePage = async () => {
-    const latestIssue = contentStore.getLatestIssue()!;
-    const societies = contentStore.getAllSocieties();
+    const latestIssue = await getLatestIssue();
+    const societies = await getAllSocieties();
 
     return (
         <>

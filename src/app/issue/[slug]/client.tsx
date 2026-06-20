@@ -7,9 +7,9 @@ import { Divider, Button, Footer, Header } from "@/components";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 // import { Review } from "@/types/data.types";
 import { ISSUE_PAGE_WIDTH, ISSUE_PAGE_HEIGHT } from "@/config/constants";
-import contentStore from "@/data/content";
+
 import { notFound } from "next/navigation";
-import { Issue, IssuePage } from "@/types/data.types";
+import { IssueFilled, IssuePage } from "@/types/data.types";
 const HTMLFlipBook = dynamic(() => import("react-pageflip"), { ssr: false });
 
 const IssueFlipBook = forwardRef<HTMLDivElement, IssuePage>(
@@ -36,7 +36,7 @@ const IssueFlipBook = forwardRef<HTMLDivElement, IssuePage>(
 );
 
 interface IssueModalProps {
-    issue: Issue;
+    issue: IssueFilled;
     isOpen: boolean;
     onClose: () => void;
 }
@@ -118,8 +118,8 @@ const IssueModal = ({ issue, isOpen, onClose }: IssueModalProps) => {
                         size="stretch"
                         minWidth={200}
                         maxWidth={1200}
-                        minHeight={280}
-                        maxHeight={1000}
+                        minHeight={1860}
+                        maxHeight={2360}
                         drawShadow={true}
                         flippingTime={700}
                         usePortrait={isMobile}
@@ -236,14 +236,13 @@ const ReviewForm = () => {
 // };
 
 interface IssuePageClientProps {
-    slug: string;
+    issueFilled?: IssueFilled;
 }
 
-const IssuePageClient = ({ slug }: IssuePageClientProps) => {
+const IssuePageClient = ({ issueFilled }: IssuePageClientProps) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const issue = contentStore.getIssueBySlug(slug);
-    if (!issue) {
+    if (!issueFilled) {
         notFound();
     }
 
@@ -253,13 +252,13 @@ const IssuePageClient = ({ slug }: IssuePageClientProps) => {
             <main className="max-w-6xl mx-auto py-16 px-4 sm:px-6 lg:px-8">
                 <div className="text-center mb-24">
                     <h1 className="font-display text-5xl text-text">
-                        {issue.name}
+                        {issueFilled.name}
                     </h1>
                     <time className="block mt-3 text-lg text-text-muted tracking-wide">
                         {new Intl.DateTimeFormat("en-US", {
                             month: "long",
                             year: "numeric",
-                        }).format(issue.releaseDate)}
+                        }).format(issueFilled.releaseDate)}
                     </time>
                 </div>
 
@@ -276,8 +275,11 @@ const IssuePageClient = ({ slug }: IssuePageClientProps) => {
                         </div>
                         <div className="relative w-full aspect-1240/1754 border border-border shadow-md bg-bg-card">
                             <Image
-                                src={issue.coverImageUrl || "/placeholder.png"}
-                                alt={`Cover of ${issue.name}`}
+                                src={
+                                    issueFilled.coverImageUrl ||
+                                    "/placeholder.png"
+                                }
+                                alt={`Cover of ${issueFilled.name}`}
                                 width={ISSUE_PAGE_WIDTH}
                                 height={ISSUE_PAGE_HEIGHT}
                                 className="object-cover w-full h-full"
@@ -294,7 +296,7 @@ const IssuePageClient = ({ slug }: IssuePageClientProps) => {
                         </div>
                         <div className="prose prose-lg text-text-muted max-w-none">
                             <p className="leading-relaxed whitespace-pre-wrap">
-                                {issue.abstract}
+                                {issueFilled.abstract}
                             </p>
                         </div>
                     </div>
@@ -324,7 +326,7 @@ const IssuePageClient = ({ slug }: IssuePageClientProps) => {
             <Footer />
 
             <IssueModal
-                issue={issue}
+                issue={issueFilled}
                 isOpen={isModalOpen}
                 onClose={() => setIsModalOpen(false)}
             />
