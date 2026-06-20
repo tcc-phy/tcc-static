@@ -18,11 +18,21 @@ export type IssueFilled = Issue & {
     pages: IssuePage[];
 }
 
+export const ReviewStatus = {
+    PENDING: "PENDING",
+    APPROVED: "APPROVED",
+    REJECTED: "REJECTED"
+};
+
+export type ReviewStatus = typeof ReviewStatus[keyof typeof ReviewStatus];
+
 export type Review = {
     id: string;
+    issueId: string;
     authorName: string;
     content: string;
-    date: Date;
+    status: ReviewStatus;
+    createdAt: Date;
 };
 
 export type College = {

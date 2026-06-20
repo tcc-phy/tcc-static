@@ -9,7 +9,7 @@ import { IoIosCloseCircleOutline } from "react-icons/io";
 import { ISSUE_PAGE_WIDTH, ISSUE_PAGE_HEIGHT } from "@/config/constants";
 
 import { notFound } from "next/navigation";
-import { IssueFilled, IssuePage } from "@/types/data.types";
+import { IssueFilled, IssuePage, Review } from "@/types/data.types";
 const HTMLFlipBook = dynamic(() => import("react-pageflip"), { ssr: false });
 
 const IssueFlipBook = forwardRef<HTMLDivElement, IssuePage>(
@@ -152,9 +152,57 @@ const IssueModal = ({ issue, isOpen, onClose }: IssueModalProps) => {
     );
 };
 
-const ReviewForm = () => {
+type ReviewFormProps = {
+    issueId: string;
+};
+
+const ReviewForm = ({ issueId }: ReviewFormProps) => {
+    const [authorName, setAuthorName] = useState("");
+    const [email, setEmail] = useState("");
+    const [content, setContent] = useState("");
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
+    const [success, setSuccess] = useState<string | null>(null);
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+
+        setLoading(true);
+        setError(null);
+        setSuccess(null);
+
+        try {
+            const res = await fetch(`/api/issues/${issueId}/reviews`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    issueId,
+                    authorName,
+                    content,
+                }),
+            });
+
+            const data = await res.json();
+
+            if (!res.ok) {
+                throw new Error(data?.message || "Something went wrong");
+            }
+
+            setSuccess(data.message);
+            setAuthorName("");
+            setEmail("");
+            setContent("");
+        } catch (err) {
+            setError(err instanceof Error ? err.message : "Unknown error");
+        } finally {
+            setLoading(false);
+        }
+    };
+
     return (
-        <form className="mt-8" onSubmit={(e) => e.preventDefault()}>
+        <form className="mt-8" onSubmit={handleSubmit}>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-6">
                 <div>
                     <label
@@ -165,6 +213,8 @@ const ReviewForm = () => {
                     </label>
                     <input
                         id="name"
+                        value={authorName}
+                        onChange={(e) => setAuthorName(e.target.value)}
                         type="text"
                         className="w-full bg-bg-card border border-border px-4 py-3 text-text focus:outline-none focus:ring-1 focus:ring-primary transition-shadow"
                         placeholder="e.g. Isaac Newton"
@@ -175,13 +225,16 @@ const ReviewForm = () => {
                         htmlFor="email"
                         className="block text-sm font-medium text-text mb-2"
                     >
-                        Email (Optional)
+                        Email (Not Required)
                     </label>
                     <input
                         id="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                         type="email"
-                        className="w-full bg-bg-card border border-border px-4 py-3 text-text focus:outline-none focus:ring-1 focus:ring-primary transition-shadow"
+                        className="w-full bg-bg-card border border-border px-4 py-3 text-text focus:outline-none focus:ring-1 focus:ring-primary transition-shadow disabled:cursor-not-allowed disabled:opacity-100 disabled:pointer-events-none"
                         placeholder="isaac@cambridge.ac.uk"
+                        disabled
                     />
                 </div>
             </div>
@@ -195,51 +248,72 @@ const ReviewForm = () => {
                 </label>
                 <textarea
                     id="review"
+                    value={content}
+                    onChange={(e) => setContent(e.target.value)}
                     rows={7}
                     className="w-full bg-bg-card border border-border px-4 py-3 text-text focus:outline-none focus:ring-1 focus:ring-primary transition-shadow resize-y"
                     placeholder="Share your thoughts on this issue..."
                 />
             </div>
 
-            <div className="flex gap-4">
-                <Button variant="outline" type="reset">
+            <div className="flex gap-4 items-center">
+                <Button
+                    variant="outline"
+                    type="reset"
+                    disabled={loading}
+                    onClick={() => {
+                        setAuthorName("");
+                        setEmail("");
+                        setContent("");
+                    }}
+                >
                     Reset All
                 </Button>
-                <Button variant="primary" type="submit">
-                    Post
+
+                <Button
+                    variant="primary"
+                    type="submit"
+                    disabled={loading || !authorName.trim() || !content.trim()}
+                >
+                    {loading ? "Posting..." : "Post"}
                 </Button>
             </div>
+
+            {error && <p className="text-danger text-sm mt-4">{error}</p>}
+
+            {success && <p className="text-success text-sm mt-4">{success}</p>}
         </form>
     );
 };
 
-// interface ReviewCardProps {
-//     review: Review;
-// }
-//
-// const ReviewCard = ({ review }: ReviewCardProps) => {
-//     return (
-//         <div className="bg-bg-card border border-border p-6 sm:p-8">
-//             <div className="flex flex-col sm:flex-row sm:items-baseline gap-2 sm:gap-4 mb-4">
-//                 <h4 className="font-display text-xl text-text">
-//                     {review.authorName}
-//                 </h4>
-//                 <time className="text-sm text-text-muted">
-//                     {new Intl.DateTimeFormat("en-US", {
-//                         dateStyle: "long",
-//                     }).format(review.date)}
-//                 </time>
-//             </div>
-//             <p className="text-text-muted leading-relaxed">{review.content}</p>
-//         </div>
-//     );
-// };
+interface ReviewCardProps {
+    review: Review;
+}
+
+const ReviewCard = ({ review }: ReviewCardProps) => {
+    return (
+        <div className="bg-bg-card border border-border p-6 sm:p-8">
+            <div className="flex flex-col sm:flex-row sm:items-baseline gap-2 sm:gap-4 mb-4">
+                <h4 className="font-display text-xl text-text">
+                    {review.authorName}
+                </h4>
+                <time className="text-sm text-text-muted">
+                    {new Intl.DateTimeFormat("en-US", {
+                        dateStyle: "long",
+                    }).format(review.createdAt)}
+                </time>
+            </div>
+            <p className="text-text-muted leading-relaxed">{review.content}</p>
+        </div>
+    );
+};
 
 interface IssuePageClientProps {
     issueFilled?: IssueFilled;
+    reviews: Review[];
 }
 
-const IssuePageClient = ({ issueFilled }: IssuePageClientProps) => {
+const IssuePageClient = ({ issueFilled, reviews }: IssuePageClientProps) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     if (!issueFilled) {
@@ -314,13 +388,13 @@ const IssuePageClient = ({ issueFilled }: IssuePageClientProps) => {
                         </h3>
                     </div>
 
-                    <ReviewForm />
+                    <ReviewForm issueId={issueFilled.id} />
 
-                    {/* <div className="mt-16 space-y-6">
-                            {reviews.map((review) => (
-                                <ReviewCard key={review.id} review={review} />
-                            ))}
-                        </div> */}
+                    <div className="mt-16 space-y-6">
+                        {reviews.map((review) => (
+                            <ReviewCard key={review.id} review={review} />
+                        ))}
+                    </div>
                 </section>
             </main>
             <Footer />

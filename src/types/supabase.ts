@@ -80,26 +80,26 @@ export type Database = {
         Row: {
           authorName: string
           content: string
-          createdAt: string | null
+          createdAt: string
           id: string
-          issueId: string | null
-          status: Database["public"]["Enums"]["reviewstatus"]
+          issueId: string
+          status: Database["public"]["Enums"]["reviewStatus"]
         }
         Insert: {
           authorName: string
           content: string
-          createdAt?: string | null
+          createdAt?: string
           id?: string
-          issueId?: string | null
-          status?: Database["public"]["Enums"]["reviewstatus"]
+          issueId: string
+          status?: Database["public"]["Enums"]["reviewStatus"]
         }
         Update: {
           authorName?: string
           content?: string
-          createdAt?: string | null
+          createdAt?: string
           id?: string
-          issueId?: string | null
-          status?: Database["public"]["Enums"]["reviewstatus"]
+          issueId?: string
+          status?: Database["public"]["Enums"]["reviewStatus"]
         }
         Relationships: [
           {
@@ -135,21 +135,21 @@ export type Database = {
           name: string
           profileImgUrl: string
           socials: Json | null
-          teamName: Database["public"]["Enums"]["teamname"]
+          teamName: Database["public"]["Enums"]["teamName"]
         }
         Insert: {
           id?: string
           name: string
           profileImgUrl: string
           socials?: Json | null
-          teamName: Database["public"]["Enums"]["teamname"]
+          teamName: Database["public"]["Enums"]["teamName"]
         }
         Update: {
           id?: string
           name?: string
           profileImgUrl?: string
           socials?: Json | null
-          teamName?: Database["public"]["Enums"]["teamname"]
+          teamName?: Database["public"]["Enums"]["teamName"]
         }
         Relationships: []
       }
@@ -161,8 +161,8 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      reviewstatus: "PENDING" | "APPROVED" | "REJECTED"
-      teamname: "DESIGN" | "OUTREACH" | "MARKETING"
+      reviewStatus: "PENDING" | "APPROVED" | "REJECTED"
+      teamName: "DESIGN" | "OUTREACH" | "MARKETING"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -290,8 +290,8 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
-      reviewstatus: ["PENDING", "APPROVED", "REJECTED"],
-      teamname: ["DESIGN", "OUTREACH", "MARKETING"],
+      reviewStatus: ["PENDING", "APPROVED", "REJECTED"],
+      teamName: ["DESIGN", "OUTREACH", "MARKETING"],
     },
   },
 } as const
