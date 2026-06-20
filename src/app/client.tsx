@@ -1,7 +1,10 @@
 "use client";
 
 import { Button, Divider, Footer, Header, Link } from "@/components";
-import { ISSUE_PAGE_HEIGHT, ISSUE_PAGE_WIDTH } from "@/config/constants";
+import {
+    SOCIETY_COVER_IMG_HEIGHT,
+    SOCIETY_COVER_IMG_WIDTH,
+} from "@/config/constants";
 import { Issue, Society } from "@/types/data.types";
 import Image from "next/image";
 
@@ -78,8 +81,8 @@ const LatestIssueSection = ({ issue }: { issue?: Issue }) => {
                                 src={issue.coverImageUrl || "/placeholder.png"}
                                 alt={`Cover of ${issue.name}`}
                                 className="object-cover"
-                                width={ISSUE_PAGE_WIDTH}
-                                height={ISSUE_PAGE_HEIGHT}
+                                width={SOCIETY_COVER_IMG_WIDTH}
+                                height={SOCIETY_COVER_IMG_HEIGHT}
                                 priority
                             />
                         </div>
@@ -191,7 +194,8 @@ const NetworkSection = ({ societies }: { societies: Society[] }) => {
                                         "/placeholder.png"
                                     }
                                     alt={`${society.name} logo`}
-                                    fill
+                                    width={SOCIETY_COVER_IMG_WIDTH}
+                                    height={SOCIETY_COVER_IMG_HEIGHT}
                                     className="object-cover"
                                 />
                             </div>

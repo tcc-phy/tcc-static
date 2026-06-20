@@ -2,8 +2,10 @@ import ArchivePageClient from "./client";
 import { getAllIssues, getAllTags } from "@/services";
 
 const ArchivePage = async () => {
-    const issues = await getAllIssues();
-    const allTags = await getAllTags();
+    const [issues, allTags] = await Promise.all([
+        await getAllIssues(),
+        await getAllTags(),
+    ]);
 
     return (
         <>
@@ -13,3 +15,5 @@ const ArchivePage = async () => {
 };
 
 export default ArchivePage;
+
+export const revalidate = 60;

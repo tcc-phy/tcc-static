@@ -2,8 +2,10 @@ import { getLatestIssue, getAllSocieties } from "@/services";
 import HomePageClient from "./client";
 
 const IssuePage = async () => {
-    const latestIssue = await getLatestIssue();
-    const societies = await getAllSocieties();
+    const [latestIssue, societies] = await Promise.all([
+        await getLatestIssue(),
+        await getAllSocieties(),
+    ]);
 
     return (
         <>
@@ -13,3 +15,5 @@ const IssuePage = async () => {
 };
 
 export default IssuePage;
+
+export const revalidate = 60;

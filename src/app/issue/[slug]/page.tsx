@@ -15,3 +15,4 @@ const IssuePage = async ({ params }: { params: Params }) => {
 };
 
 export default IssuePage;
+export const revalidate = 60;

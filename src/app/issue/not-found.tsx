@@ -1,5 +1,3 @@
-"use client";
-
 import { Header, Footer, Link, Divider } from "@/components";
 
 const IssueNotFound = () => {
@@ -40,3 +38,5 @@ const IssueNotFound = () => {
 };
 
 export default IssueNotFound;
+
+export const dynamic = "force-static";

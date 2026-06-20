@@ -144,3 +144,4 @@ const TeamPageClient = ({ team }: TeamPageClientProps) => {
 };
 
 export default TeamPageClient;
+export const revalidate = 60;

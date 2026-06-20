@@ -12,3 +12,5 @@ const IssuePage = async () => {
 };
 
 export default IssuePage;
+
+export const revalidate = 60;
