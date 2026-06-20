@@ -3,7 +3,7 @@
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import { useState, useRef, forwardRef, useEffect } from "react";
-import { Divider, Button, Footer, Header } from "@/components";
+import { Divider, Button, Footer, Header, Link } from "@/components";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 // import { Review } from "@/types/data.types";
 import { ISSUE_PAGE_WIDTH, ISSUE_PAGE_HEIGHT } from "@/config/constants";
@@ -160,6 +160,8 @@ const ReviewForm = ({ issueId }: ReviewFormProps) => {
     const [authorName, setAuthorName] = useState("");
     const [email, setEmail] = useState("");
     const [content, setContent] = useState("");
+    const [agreed, setAgreed] = useState(false);
+
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const [success, setSuccess] = useState<string | null>(null);
@@ -194,6 +196,7 @@ const ReviewForm = ({ issueId }: ReviewFormProps) => {
             setAuthorName("");
             setEmail("");
             setContent("");
+            setAgreed(false);
         } catch (err) {
             setError(err instanceof Error ? err.message : "Unknown error");
         } finally {
@@ -220,6 +223,7 @@ const ReviewForm = ({ issueId }: ReviewFormProps) => {
                         placeholder="e.g. Isaac Newton"
                     />
                 </div>
+
                 <div>
                     <label
                         htmlFor="email"
@@ -256,6 +260,38 @@ const ReviewForm = ({ issueId }: ReviewFormProps) => {
                 />
             </div>
 
+            <div className="flex items-start gap-3 mb-6">
+                <input
+                    id="terms"
+                    type="checkbox"
+                    checked={agreed}
+                    onChange={(e) => setAgreed(e.target.checked)}
+                    className="mt-1 h-4 w-4 accent-primary"
+                />
+                <label
+                    htmlFor="terms"
+                    className="text-sm text-text-muted leading-relaxed"
+                >
+                    I agree to the{" "}
+                    <Link
+                        href="/terms"
+                        variant="none"
+                        className="text-text underline hover:opacity-80"
+                    >
+                        Terms of Service
+                    </Link>{" "}
+                    and{" "}
+                    <Link
+                        href="/privacy"
+                        variant="none"
+                        className="text-text underline hover:opacity-80"
+                    >
+                        Privacy Policy
+                    </Link>
+                    .
+                </label>
+            </div>
+
             <div className="flex gap-4 items-center">
                 <Button
                     variant="outline"
@@ -265,6 +301,7 @@ const ReviewForm = ({ issueId }: ReviewFormProps) => {
                         setAuthorName("");
                         setEmail("");
                         setContent("");
+                        setAgreed(false);
                     }}
                 >
                     Reset All
@@ -273,14 +310,18 @@ const ReviewForm = ({ issueId }: ReviewFormProps) => {
                 <Button
                     variant="primary"
                     type="submit"
-                    disabled={loading || !authorName.trim() || !content.trim()}
+                    disabled={
+                        loading ||
+                        !authorName.trim() ||
+                        !content.trim() ||
+                        !agreed
+                    }
                 >
                     {loading ? "Posting..." : "Post"}
                 </Button>
             </div>
 
             {error && <p className="text-danger text-sm mt-4">{error}</p>}
-
             {success && <p className="text-success text-sm mt-4">{success}</p>}
         </form>
     );

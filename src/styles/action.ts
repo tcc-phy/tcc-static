@@ -19,8 +19,13 @@ const getActionElementStyles = (variant: Variant, size: Size) => {
             "bg-primary text-text-inverted hover:bg-primary-hover py-2.5 px-6 [writing-mode:vertical-rl] rotate-180 tracking-widest uppercase text-xs",
         verticalOutline:
             "border border-primary bg-transparent hover:bg-black/5 py-2.5 px-6 [writing-mode:vertical-rl] rotate-180 tracking-widest uppercase text-xs",
-        noStyle: ""
+        noStyle: "",
+        none: "",
     };
+
+    if (variant === "none") {
+        return ``;
+    }
 
     return `${base} ${variants[variant]} ${!["vertical", "noStyle"].includes(variant) ? sizes[size] : ""
         }`;

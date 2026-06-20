@@ -213,7 +213,10 @@ const NetworkSection = ({ societies }: { societies: Society[] }) => {
 
 const SubscribeSection = () => {
     return (
-        <section className="w-full px-4 sm:px-6 lg:px-8 py-36 bg-bg-card border-t border-border">
+        <section
+            id="subscribe-section"
+            className="w-full px-4 sm:px-6 lg:px-8 py-36 bg-bg-card border-t border-border"
+        >
             <div className="max-w-6xl mx-auto text-center">
                 <div className="mb-10">
                     <h2 className="font-display text-4xl md:text-5xl text-text mb-4">

@@ -1,19 +1,19 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
-import { Button } from "@/components";
+import { Link, Button } from "@/components";
 import { RxHamburgerMenu } from "react-icons/rx";
 
 export const Header = () => {
     const [isOpen, setIsOpen] = useState(false);
 
     return (
-        <header className="w-full bg-bg-card border-b border-border sticky top-0 z-50 transition-colors duration-300">
+        <header className="w-full bg-bg-card border-b border-border sticky top-0 z-25 transition-colors duration-300">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16">
                 <div className="shrink-0 flex items-center">
                     <Link
                         href="/"
+                        variant="none"
                         className="font-display text-2xl tracking-tight text-text hover:text-text-muted transition-colors"
                     >
                         Confluence Chronicles
@@ -23,18 +23,21 @@ export const Header = () => {
                 <nav className="hidden md:flex space-x-4 lg:space-x-8">
                     <Link
                         href="/"
+                        variant="none"
                         className="text-text hover:text-primary transition-colors font-medium"
                     >
                         Home
                     </Link>
                     <Link
                         href="/archive"
+                        variant="none"
                         className="text-text hover:text-primary transition-colors font-medium"
                     >
                         Archive
                     </Link>
                     <Link
                         href="/team"
+                        variant="none"
                         className="text-text hover:text-primary transition-colors font-medium"
                     >
                         Team
@@ -46,12 +49,16 @@ export const Header = () => {
                     <Button variant="primary">Sign Up</Button>
                 </div>
                 <div className="hidden md:flex lg:hidden items-center space-x-4">
-                    <Button variant="outline" size="small">
+                    <Link href="/contact" variant="outline" size="small">
                         Contact Us
-                    </Button>
-                    <Button variant="primary" size="small">
+                    </Link>
+                    <Link
+                        href="/#subscribe-section"
+                        variant="primary"
+                        size="small"
+                    >
                         Sign Up
-                    </Button>
+                    </Link>
                 </div>
 
                 <div className="md:hidden relative flex items-center">
