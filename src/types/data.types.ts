@@ -30,7 +30,8 @@ export type Review = {
     id: string;
     issueId: string;
     authorName: string;
-    content: string;
+    rating: number;
+    content?: string;
     status: ReviewStatus;
     createdAt: Date;
 };

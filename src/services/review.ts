@@ -28,12 +28,14 @@ const getAllReviewsByIssueId = async (issueId: string): Promise<Review[]> => {
 type addReviewInput = {
     issueId: string;
     authorName: string;
-    content: string;
+    rating: number;
+    content?: string;
 }
 
 const addReview = async ({
     issueId,
     authorName,
+    rating,
     content
 }: addReviewInput): Promise<ServiceResolve<{
     message: string;
@@ -63,9 +65,10 @@ const addReview = async ({
     const payload: TablesInsert<"reviews"> = {
         issueId,
         authorName,
-        content,
+        rating,
+        content: content ?? "",
         status: "PENDING",
-        createdAt: new Date().toISOString()
+        createdAt: new Date().toISOString(),
     };
 
     const { data, error } = await sbAdmin

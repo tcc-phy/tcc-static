@@ -30,6 +30,7 @@ const POST = async (req: NextRequest): Promise<NextResponse> => {
     const serviceResponse = await addReview({
         issueId: validationResult.data.issueId,
         authorName: validationResult.data.authorName,
+        rating: validationResult.data.rating,
         content: validationResult.data.content
     });
 

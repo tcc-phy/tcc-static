@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Link, Button } from "@/components";
 import { RxHamburgerMenu } from "react-icons/rx";
 
-export const Header = () => {
+const Header = () => {
     const [isOpen, setIsOpen] = useState(false);
 
     return (
@@ -45,9 +45,14 @@ export const Header = () => {
                 </nav>
 
                 <div className="hidden lg:flex items-center space-x-4">
-                    <Button variant="outline">Contact Us</Button>
-                    <Button variant="primary">Sign Up</Button>
+                    <Link href="/contact" variant="outline">
+                        Contact Us
+                    </Link>
+                    <Link href="/#subscribe-section" variant="primary">
+                        Sign Up
+                    </Link>
                 </div>
+
                 <div className="hidden md:flex lg:hidden items-center space-x-4">
                     <Link href="/contact" variant="outline" size="small">
                         Contact Us
@@ -74,31 +79,39 @@ export const Header = () => {
                         <div className="absolute right-0 top-full mt-2 w-56 z-50 bg-bg-card border border-border rounded-lg shadow-lg p-4 space-y-3">
                             <Link
                                 href="/"
-                                className="block text-text hover:text-primary font-medium"
+                                variant="none"
+                                className="text-text hover:text-primary transition-colors font-medium block"
                             >
                                 Home
                             </Link>
                             <Link
                                 href="/archive"
-                                className="block text-text hover:text-primary font-medium"
+                                variant="none"
+                                className="text-text hover:text-primary transition-colors font-medium block"
                             >
                                 Archive
                             </Link>
                             <Link
                                 href="/team"
-                                className="block text-text hover:text-primary font-medium"
+                                variant="none"
+                                className="text-text hover:text-primary transition-colors font-medium block"
                             >
                                 Team
                             </Link>
-
-                            <div className="border-t border-border pt-3 space-y-2">
-                                <Button variant="outline" className="w-full">
-                                    Contact Us
-                                </Button>
-                                <Button variant="primary" className="w-full">
-                                    Sign Up
-                                </Button>
-                            </div>
+                            <Link
+                                href="/contact"
+                                variant="none"
+                                className="text-text hover:text-primary transition-colors font-medium block"
+                            >
+                                Contact Us
+                            </Link>
+                            <Link
+                                href="/#subscribe-section"
+                                variant="none"
+                                className="text-text hover:text-primary transition-colors font-medium block"
+                            >
+                                Sign Up
+                            </Link>
                         </div>
                     )}
                 </div>

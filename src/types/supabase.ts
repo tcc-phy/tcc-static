@@ -83,6 +83,7 @@ export type Database = {
           createdAt: string
           id: string
           issueId: string
+          rating: number
           status: Database["public"]["Enums"]["reviewStatus"]
         }
         Insert: {
@@ -91,6 +92,7 @@ export type Database = {
           createdAt?: string
           id?: string
           issueId: string
+          rating: number
           status?: Database["public"]["Enums"]["reviewStatus"]
         }
         Update: {
@@ -99,6 +101,7 @@ export type Database = {
           createdAt?: string
           id?: string
           issueId?: string
+          rating?: number
           status?: Database["public"]["Enums"]["reviewStatus"]
         }
         Relationships: [

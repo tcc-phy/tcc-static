@@ -4,12 +4,13 @@ import dynamic from "next/dynamic";
 import Image from "next/image";
 import { useState, useRef, forwardRef, useEffect } from "react";
 import { Divider, Button, Footer, Header, Link } from "@/components";
-import { IoIosCloseCircleOutline } from "react-icons/io";
-// import { Review } from "@/types/data.types";
+import { FaStar, FaRegStar, FaStarHalfAlt } from "react-icons/fa";
+import { FiShare2, FiCheck } from "react-icons/fi";
 import { ISSUE_PAGE_WIDTH, ISSUE_PAGE_HEIGHT } from "@/config/constants";
-
+import { IoIosCloseCircleOutline } from "react-icons/io";
 import { notFound } from "next/navigation";
 import { IssueFilled, IssuePage, Review } from "@/types/data.types";
+
 const HTMLFlipBook = dynamic(() => import("react-pageflip"), { ssr: false });
 
 const IssueFlipBook = forwardRef<HTMLDivElement, IssuePage>(
@@ -160,10 +161,12 @@ const ReviewForm = ({ issueId }: ReviewFormProps) => {
     const [authorName, setAuthorName] = useState("");
     const [email, setEmail] = useState("");
     const [content, setContent] = useState("");
+    const [rating, setRating] = useState<number>(0);
     const [agreed, setAgreed] = useState(false);
 
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
+    const [issues, setIssues] = useState<string[]>([]);
     const [success, setSuccess] = useState<string | null>(null);
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -171,7 +174,18 @@ const ReviewForm = ({ issueId }: ReviewFormProps) => {
 
         setLoading(true);
         setError(null);
+        setIssues([]);
         setSuccess(null);
+
+        const payload: Record<string, any> = {
+            issueId,
+            authorName,
+            rating,
+        };
+
+        if (content.trim()) {
+            payload.content = content.trim();
+        }
 
         try {
             const res = await fetch(`/api/issues/${issueId}/reviews`, {
@@ -179,23 +193,34 @@ const ReviewForm = ({ issueId }: ReviewFormProps) => {
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({
-                    issueId,
-                    authorName,
-                    content,
-                }),
+                body: JSON.stringify(payload),
             });
 
             const data = await res.json();
 
             if (!res.ok) {
+                if (
+                    data?.issues &&
+                    Array.isArray(data.issues) &&
+                    data.issues.length > 0
+                ) {
+                    const extractedIssues = data.issues.map((i: any) =>
+                        typeof i === "string"
+                            ? i
+                            : i.message || "Invalid input",
+                    );
+                    setIssues(extractedIssues);
+                    return;
+                }
+
                 throw new Error(data?.message || "Something went wrong");
             }
 
-            setSuccess(data.message);
+            setSuccess(data.message || "Review posted successfully!");
             setAuthorName("");
             setEmail("");
             setContent("");
+            setRating(0);
             setAgreed(false);
         } catch (err) {
             setError(err instanceof Error ? err.message : "Unknown error");
@@ -244,11 +269,38 @@ const ReviewForm = ({ issueId }: ReviewFormProps) => {
             </div>
 
             <div className="mb-6">
+                <label className="block text-sm font-medium text-text mb-2">
+                    Rating <span className="text-danger">*</span>
+                </label>
+                <div className="flex gap-2">
+                    {[1, 2, 3, 4, 5].map((star) => (
+                        <button
+                            key={star}
+                            type="button"
+                            onClick={() => setRating(star)}
+                            className={`p-1 transition-colors ${
+                                rating >= star
+                                    ? "text-yellow-400"
+                                    : "text-text-muted hover:text-yellow-400/70 "
+                            }`}
+                        >
+                            {rating >= star ? (
+                                <FaStar size={26} />
+                            ) : (
+                                <FaRegStar size={26} />
+                            )}
+                        </button>
+                    ))}
+                </div>
+            </div>
+
+            <div className="mb-6">
                 <label
                     htmlFor="review"
                     className="block text-sm font-medium text-text mb-2"
                 >
-                    Your Review <span className="text-danger">*</span>
+                    Your Review{" "}
+                    <span className="text-text-muted text-xs">(Optional)</span>
                 </label>
                 <textarea
                     id="review"
@@ -301,7 +353,11 @@ const ReviewForm = ({ issueId }: ReviewFormProps) => {
                         setAuthorName("");
                         setEmail("");
                         setContent("");
+                        setRating(0);
                         setAgreed(false);
+                        setIssues([]);
+                        setError(null);
+                        setSuccess(null);
                     }}
                 >
                     Reset All
@@ -311,15 +367,22 @@ const ReviewForm = ({ issueId }: ReviewFormProps) => {
                     variant="primary"
                     type="submit"
                     disabled={
-                        loading ||
-                        !authorName.trim() ||
-                        !content.trim() ||
-                        !agreed
+                        loading || !authorName.trim() || rating === 0 || !agreed
                     }
                 >
                     {loading ? "Posting..." : "Post"}
                 </Button>
             </div>
+
+            {issues.length > 0 && (
+                <div className="mt-4 p-4 border border-danger/30 bg-danger/5 rounded">
+                    <ul className="list-disc pl-5 text-danger text-sm space-y-1">
+                        {issues.map((issue, index) => (
+                            <li key={index}>{issue}</li>
+                        ))}
+                    </ul>
+                </div>
+            )}
 
             {error && <p className="text-danger text-sm mt-4">{error}</p>}
             {success && <p className="text-success text-sm mt-4">{success}</p>}
@@ -334,18 +397,142 @@ interface ReviewCardProps {
 const ReviewCard = ({ review }: ReviewCardProps) => {
     return (
         <div className="bg-bg-card border border-border p-6 sm:p-8">
-            <div className="flex flex-col sm:flex-row sm:items-baseline gap-2 sm:gap-4 mb-4">
-                <h4 className="font-display text-xl text-text">
-                    {review.authorName}
-                </h4>
-                <time className="text-sm text-text-muted">
-                    {new Intl.DateTimeFormat("en-US", {
-                        dateStyle: "long",
-                    }).format(review.createdAt)}
-                </time>
+            <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4 mb-4">
+                <div>
+                    <h4 className="font-display text-xl">
+                        {review.authorName}
+                    </h4>
+
+                    <time className="block text-xs text-text-muted">
+                        {new Intl.DateTimeFormat("en-US", {
+                            dateStyle: "long",
+                        }).format(new Date(review.createdAt))}
+                    </time>
+                </div>
+
+                <div className="flex gap-1 text-yellow-400 shrink-0">
+                    {[1, 2, 3, 4, 5].map((star) =>
+                        review.rating >= star ? (
+                            <FaStar key={star} size={18} />
+                        ) : (
+                            <FaRegStar key={star} size={18} />
+                        ),
+                    )}
+                </div>
             </div>
-            <p className="text-text-muted leading-relaxed">{review.content}</p>
+
+            {review.content?.trim() && (
+                <p className="text-text-muted leading-relaxed whitespace-pre-line">
+                    {review.content}
+                </p>
+            )}
         </div>
+    );
+};
+
+interface ReviewSectionSummaryProps {
+    reviews: Review[];
+}
+
+const ReviewSectionSummary = ({ reviews }: ReviewSectionSummaryProps) => {
+    if (reviews.length === 0) return null;
+
+    const totalReviews = reviews.length;
+    const averageRating =
+        reviews.reduce((acc, review) => acc + review.rating, 0) / totalReviews;
+
+    const formattedAverage = Number(averageRating.toFixed(1));
+
+    return (
+        <div className="border-b border-border pb-6 mb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+                <h3 className="text-2xl font-display mb-1">
+                    Readers Spotlight
+                </h3>
+                <p className="text-sm text-text-muted">
+                    Based on {totalReviews}{" "}
+                    {totalReviews === 1 ? "review" : "reviews"}
+                </p>
+            </div>
+
+            <div className="flex items-center gap-4 bg-bg-card/50 px-4 py-2.5 rounded-lg border border-border/60 sm:border-none sm:bg-transparent sm:p-0 w-fit">
+                <div className="flex items-baseline gap-0.5">
+                    <span className="text-4xl font-display font-bold tracking-tight">
+                        {formattedAverage}
+                    </span>
+                    <span className="text-text-muted text-xs font-semibold uppercase ml-1">
+                        / 5
+                    </span>
+                </div>
+
+                <div className="h-6 w-px bg-border/80 hidden sm:block" />
+
+                <div className="flex gap-0.5 text-yellow-400 text-lg">
+                    {[1, 2, 3, 4, 5].map((star) => {
+                        if (averageRating >= star) {
+                            return <FaStar key={star} />;
+                        } else if (
+                            averageRating > star - 1 &&
+                            averageRating < star
+                        ) {
+                            return <FaStarHalfAlt key={star} />;
+                        } else {
+                            return <FaRegStar key={star} />;
+                        }
+                    })}
+                </div>
+            </div>
+        </div>
+    );
+};
+
+const ShareButton = () => {
+    const [copied, setCopied] = useState(false);
+
+    const handleShare = async () => {
+        const shareData = {
+            title: document.title || "Check this out!",
+            url: window.location.href,
+        };
+
+        try {
+            if (navigator.share && navigator.canShare?.(shareData)) {
+                await navigator.share(shareData);
+                return;
+            }
+        } catch (err) {}
+
+        try {
+            await navigator.clipboard.writeText(shareData.url);
+
+            setCopied(true);
+            setTimeout(() => setCopied(false), 2000);
+        } catch (err) {
+            alert("Failed to copy! Try using a new modern browser.");
+        }
+    };
+
+    return (
+        <Button
+            variant="verticalOutline"
+            onClick={handleShare}
+            className="flex items-center gap-2 transition-all"
+        >
+            {copied ? (
+                <>
+                    <span className="text-success font-medium">Copied!</span>
+                    <FiCheck
+                        className="text-success scale-110 transition-transform rotate-90"
+                        size={18}
+                    />
+                </>
+            ) : (
+                <>
+                    <span>Share It</span>
+                    <FiShare2 size={18} />
+                </>
+            )}
+        </Button>
     );
 };
 
@@ -386,7 +573,7 @@ const IssuePageClient = ({ issueFilled, reviews }: IssuePageClientProps) => {
                             >
                                 Open
                             </Button>
-                            <Button variant="verticalOutline">Share It</Button>
+                            <ShareButton />
                         </div>
                         <div className="relative w-full aspect-1240/1754 border border-border shadow-md bg-bg-card">
                             <Image
@@ -430,11 +617,30 @@ const IssuePageClient = ({ issueFilled, reviews }: IssuePageClientProps) => {
                     </div>
 
                     <ReviewForm issueId={issueFilled.id} />
+                </section>
 
-                    <div className="mt-16 space-y-6">
-                        {reviews.map((review) => (
-                            <ReviewCard key={review.id} review={review} />
-                        ))}
+                <Divider marginT="mt-24" marginB="mb-24" />
+
+                <section className="max-w-3xl mx-auto">
+                    <div className="text-center mb-24">
+                        <h3 className="font-display text-2xl font-bold text-text-muted">
+                            See what other readers
+                            <br /> have to say.
+                        </h3>
+                    </div>
+
+                    <ReviewSectionSummary reviews={reviews} />
+
+                    <div className="mt-12 space-y-6">
+                        {reviews.length === 0 ? (
+                            <p className="text-text-muted text-sm italic">
+                                No reviews yet. Be the first to add one!
+                            </p>
+                        ) : (
+                            reviews.map((review) => (
+                                <ReviewCard key={review.id} review={review} />
+                            ))
+                        )}
                     </div>
                 </section>
             </main>

@@ -8,10 +8,15 @@ const schemas = {
             .string()
             .min(2, "Author name cannot be less than 2 characters.")
             .max(31, "Author name cannot be more than 31 characters."),
+        rating: z
+            .int()
+            .min(1, "Rating cannot be less than 1.")
+            .max(5, "Rating cannot be more than 5."),
         content: z
             .string()
             .min(10, "Review cannot be less than 10 characters.")
             .max(1000, "Review cannot be more than 1000 characters.")
+            .optional()
     })
 }
 
