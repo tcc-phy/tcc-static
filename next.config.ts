@@ -32,6 +32,7 @@ const securityHeaders = [
 const nextConfig: NextConfig = {
     reactCompiler: true,
     images: {
+        unoptimized: true,
         remotePatterns: [
             {
                 protocol: 'https',
