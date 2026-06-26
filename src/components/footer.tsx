@@ -17,7 +17,7 @@ const Footer = () => {
                             href="/"
                             className="font-display text-2xl tracking-tight text-text block mb-4"
                         >
-                            Confluence Chronicles
+                            The Confluence Chronicles
                         </Link>
                         <p className="text-text-muted leading-relaxed text-sm pr-4">
                             An Independent physics group exploring theoretical
@@ -95,32 +95,18 @@ const Footer = () => {
                         </p>
                         <div className="flex items-center space-x-5">
                             <a
-                                href="#"
-                                className="text-primary hover:text-primary-hover transition-colors"
-                                aria-label="X (Twitter)"
-                            >
-                                <FaXTwitter className="w-6 h-6" />
-                            </a>
-                            <a
-                                href="#"
+                                href="https://github.com/tcc-phy"
                                 className="text-primary hover:text-primary-hover transition-colors"
                                 aria-label="GitHub"
                             >
                                 <FaGithub className="w-6 h-6" />
                             </a>
                             <a
-                                href="#"
+                                href="https://www.instagram.com/confluence.chronicles"
                                 className="text-primary hover:text-primary-hover transition-colors"
                                 aria-label="Instagram"
                             >
                                 <FaInstagram className="w-6 h-6" />
-                            </a>
-                            <a
-                                href="#"
-                                className="text-primary hover:text-primary-hover transition-colors"
-                                aria-label="Facebook"
-                            >
-                                <FaFacebook className="w-6 h-6" />
                             </a>
                         </div>
                     </div>
@@ -129,7 +115,7 @@ const Footer = () => {
                 <Divider marginB="mb-8" />
 
                 <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-text-muted">
-                    <p>© {currentYear} Confluence Chronicles</p>
+                    <p>© {currentYear} The Confluence Chronicles</p>
 
                     <div className="flex space-x-8">
                         <Link

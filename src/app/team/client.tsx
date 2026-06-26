@@ -2,15 +2,11 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { Button, Footer, Header } from "@/components";
+import Link from "next/link";
 import { FaLinkedin, FaInstagram } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
+import { Button, Footer, Header } from "@/components";
 import { TeamName, Team } from "@/types/data.types";
-import {
-    USER_PROFILE_IMG_HEIGHT,
-    USER_PROFILE_IMG_WIDTH,
-} from "@/config/constants";
-import Link from "next/link";
 
 interface TeamMemberCardProps {
     member: Team;
@@ -23,34 +19,37 @@ const TeamMemberCard = ({ member }: TeamMemberCardProps) => {
                 <Image
                     src={member.profileImgUrl || "/placeholder.png"}
                     alt={`Profile photo of ${member.name}`}
-                    width={USER_PROFILE_IMG_WIDTH}
-                    height={USER_PROFILE_IMG_HEIGHT}
-                    className="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105"
+                    fill
+                    sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                    className="object-cover transition-transform duration-500 group-hover:scale-105 transform-gpu will-change-transform"
                 />
 
                 <div className="absolute top-2 right-2 flex flex-col gap-1.5 opacity-0 translate-x-3 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-0">
-                    {member.socials.linkedInUrl && (
+                    {member.socials?.linkedInUrl && (
                         <Link
                             href={member.socials.linkedInUrl}
                             className="p-2 bg-bg-base/50 text-text hover:text-primary shadow-md"
+                            aria-label={`LinkedIn profile of ${member.name}`}
                         >
                             <FaLinkedin className="w-5 h-5 text-[#0A66C2]" />
                         </Link>
                     )}
 
-                    {member.socials.twitterUrl && (
+                    {member.socials?.twitterUrl && (
                         <Link
                             href={member.socials.twitterUrl}
                             className="p-2 bg-bg-base/50 text-text hover:text-primary shadow-md"
+                            aria-label={`Twitter profile of ${member.name}`}
                         >
                             <FaXTwitter className="w-5 h-5 text-[#1DA1F2]" />
                         </Link>
                     )}
 
-                    {member.socials.instagramUrl && (
+                    {member.socials?.instagramUrl && (
                         <Link
                             href={member.socials.instagramUrl}
                             className="p-2 bg-bg-base/50 text-text hover:text-primary shadow-md"
+                            aria-label={`Instagram profile of ${member.name}`}
                         >
                             <FaInstagram className="w-5 h-5 text-[#E4405F]" />
                         </Link>
@@ -72,35 +71,35 @@ interface TeamPageClientProps {
 }
 
 const TeamPageClient = ({ team }: TeamPageClientProps) => {
-    type TabOption = "ALL" | TeamName;
-    const [activeTab, setActiveTab] = useState<TabOption>("ALL");
+    const [activeTab, setActiveTab] = useState<TeamName>(
+        TeamName.REPRESENTATIVE,
+    );
 
-    const tabs: { label: string; value: TabOption }[] = [
-        { label: "All", value: "ALL" },
-        { label: "Design", value: TeamName.DESIGN },
+    const tabs: { label: string; value: TeamName }[] = [
+        { label: "Representative", value: TeamName.REPRESENTATIVE },
         { label: "Outreach", value: TeamName.OUTREACH },
-        { label: "Marketing", value: TeamName.MARKETING },
+        { label: "Design", value: TeamName.DESIGN },
     ];
 
     const filteredMembers = team.filter(
-        (member) => activeTab === "ALL" || member.teamName === activeTab,
+        (member) => member.teamName === activeTab,
     );
 
     return (
         <>
             <Header />
-            <main className="max-w-6xl mx-auto py-16 px-4 sm:px-6 lg:px-8">
-                <header className="text-center my-12 md:my-16">
-                    <h1 className="font-serif text-5xl md:text-6xl text-text mb-6">
+            <main className="py-16 px-4 sm:px-6 lg:px-8">
+                <header className="max-w-6xl mx-auto text-center my-12 md:my-16">
+                    <h1 className="font-serif text-3xl md:text-4xl text-text mb-6">
                         Meet the people behind it
                     </h1>
-                    <p className="text-xl md:text-2xl text-text-muted max-w-2xl mx-auto font-light leading-relaxed">
+                    <p className="text-base md:text-xl text-text-muted max-w-2xl mx-auto font-light leading-relaxed">
                         A collective of students exploring physics through
                         writing and conversation.
                     </p>
                 </header>
 
-                <div className="space-y-8">
+                <div className="max-w-6xl mx-auto space-y-8">
                     <nav
                         className="flex flex-wrap gap-2 overflow-x-auto pb-2 hide-scrollbar"
                         aria-label="Team filters"
@@ -144,4 +143,3 @@ const TeamPageClient = ({ team }: TeamPageClientProps) => {
 };
 
 export default TeamPageClient;
-export const revalidate = 60;

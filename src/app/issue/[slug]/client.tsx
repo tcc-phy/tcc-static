@@ -6,10 +6,12 @@ import { useState, useRef, forwardRef, useEffect } from "react";
 import { Divider, Button, Footer, Header, Link } from "@/components";
 import { FaStar, FaRegStar, FaStarHalfAlt } from "react-icons/fa";
 import { FiShare2, FiCheck } from "react-icons/fi";
+import { IoMdDownload } from "react-icons/io";
 import { ISSUE_PAGE_WIDTH, ISSUE_PAGE_HEIGHT } from "@/config/constants";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import { notFound } from "next/navigation";
 import { IssueFilled, IssuePage, Review } from "@/types/data.types";
+import getActionElementStyles from "@/styles/action";
 
 const HTMLFlipBook = dynamic(() => import("react-pageflip"), { ssr: false });
 
@@ -574,6 +576,20 @@ const IssuePageClient = ({ issueFilled, reviews }: IssuePageClientProps) => {
                                 Open
                             </Button>
                             <ShareButton />
+                            <a
+                                href="https://drive.google.com/drive/folders/1gtSepto45mLY-Srxmuc8zAK6CPtF92eD"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className={getActionElementStyles(
+                                    "verticalOutline",
+                                    "normal",
+                                )}
+                            >
+                                <IoMdDownload
+                                    fontSize={18}
+                                    className="rotate-180"
+                                />
+                            </a>
                         </div>
                         <div className="relative w-full aspect-1240/1754 border border-border shadow-md bg-bg-card">
                             <Image

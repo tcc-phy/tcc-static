@@ -20,14 +20,14 @@ const ArchiveStats = ({ issueCount, tagCount }: ArchiveStatsProps) => (
                 Issues
             </span>
         </div>
-        <div className="text-center">
+        {/* <div className="text-center">
             <span className="block font-serif text-4xl text-text mb-1">
                 {tagCount}
             </span>
             <span className="text-sm text-text-muted uppercase tracking-wider">
                 Tags
             </span>
-        </div>
+        </div> */}
     </div>
 );
 

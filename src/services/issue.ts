@@ -39,7 +39,9 @@ const getLatestIssue = async (): Promise<Issue | undefined> => {
     }
 }
 
-const getIssueBySlug = async (slug: string): Promise<IssueFilled | undefined> => {
+const getIssueBySlug = async (
+    slug: string
+): Promise<IssueFilled | undefined> => {
     const { data, error } = await sbClient
         .from("issues")
         .select(`
@@ -47,18 +49,18 @@ const getIssueBySlug = async (slug: string): Promise<IssueFilled | undefined> =>
       issuePages (*)
     `)
         .eq("slug", slug)
-        .single();
+        .maybeSingle();
 
     if (error) {
         throw new Error(error.message);
     }
 
-    if (!data) return;
+    if (!data) return undefined;
 
     return {
         ...data,
         releaseDate: new Date(data.releaseDate),
-        pages: data.issuePages ?? []
+        pages: data.issuePages ?? [],
     };
 };
 

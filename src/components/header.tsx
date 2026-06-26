@@ -16,7 +16,7 @@ const Header = () => {
                         variant="none"
                         className="font-display text-2xl tracking-tight text-text hover:text-text-muted transition-colors"
                     >
-                        Confluence Chronicles
+                        The Confluence Chronicles
                     </Link>
                 </div>
 

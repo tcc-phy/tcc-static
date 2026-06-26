@@ -16,9 +16,41 @@ const ContactPage = () => {
 
                     <Divider marginT="mt-6" marginB="mb-10" />
 
-                    <div>
-                        <p className="text-text-muted tracking-widest">EMAIL</p>
-                        <p className="text-lg">COMING SOON</p>
+                    <div className="space-y-8">
+                        <div>
+                            <p className="text-text-muted tracking-widest">
+                                EMAIL
+                            </p>
+                            <p className="text-lg">
+                                theconfluencechronicles.phy@gmail.com
+                            </p>
+                        </div>
+
+                        <div>
+                            <p className="text-text-muted tracking-widest mb-2">
+                                SOCIALS
+                            </p>
+
+                            <div className="flex justify-center mt-6 gap-20 text-lg">
+                                <a
+                                    href="https://www.instagram.com/confluence.chronicles"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="hover:underline"
+                                >
+                                    Instagram
+                                </a>
+
+                                <a
+                                    href="https://github.com/tcc-phy"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="hover:underline"
+                                >
+                                    GitHub
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </main>

@@ -52,7 +52,7 @@ export type Society = {
 export const TeamName = {
     DESIGN: "DESIGN",
     OUTREACH: "OUTREACH",
-    MARKETING: "MARKETING",
+    REPRESENTATIVE: "REPRESENTATIVE",
 } as const;
 
 export type TeamName = typeof TeamName[keyof typeof TeamName];

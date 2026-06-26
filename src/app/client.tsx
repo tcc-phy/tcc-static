@@ -28,9 +28,9 @@ const HeroSection = () => {
                 </h1>
 
                 <p className="text-lg md:text-xl text-text-muted max-w-2xl leading-relaxed mb-12 font-light">
-                    A collaborative physics newsletter uniting student societies
-                    across Indian colleges through rigorous research, visionary
-                    ideas, and scientific storytelling.
+                    The Confluence Chronicles is an inter-college, student-led,
+                    publication dedicated to fostering scientific inquiry and
+                    cross-institutional collaboration in the physical sciences.
                 </p>
 
                 <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6">
@@ -128,33 +128,42 @@ const AboutSection = () => {
             <div className="absolute top-0 right-0 w-1/3 h-full bg-bg-card opacity-50 -skew-x-12 translate-x-16 z-0"></div>
 
             <div className="max-w-6xl mx-auto relative z-10">
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24 items-start">
-                    <div className="lg:col-span-4 flex flex-col">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-24 items-start">
+                    <div className="md:col-span-1 flex flex-col">
                         <h2 className="font-display text-4xl md:text-5xl text-text mb-6">
                             About Us
                         </h2>
                         <div className="w-12 h-px bg-primary mb-6"></div>
                         <p className="text-text-muted text-lg">
-                            Preserving depth and rigor while making complex
-                            concepts accessible.
+                            The Confluence Chronicles brings together student
+                            communities from institutions such as IISER, NISER,
+                            IITs, and the University of Delhi (DU).
                         </p>
                     </div>
-
-                    <div className="lg:col-span-8">
-                        <p className="text-xl md:text-2xl text-text leading-relaxed font-light mb-8">
-                            Confluence Chronicles is a collaborative physics
-                            newsletter created by student societies across
-                            Indian colleges, bringing together diverse academic
-                            voices from different institutions.
+                    <div className="md:col-span-2">
+                        <p className="text-lg md:text-xl text-text leading-relaxed font-light">
+                            The initiative aims to highlight how core scientific
+                            research environments interface with applied
+                            scientific and technological domains, thereby
+                            presenting a holistic picture of scientific practice
+                            in India.
                         </p>
-                        <p className="text-lg text-text-muted leading-relaxed">
-                            It serves as a shared platform for students
-                            passionate about physics and related fields to
-                            contribute and connect. We publish curated insights,
-                            essays, and explorations at the intersection of
-                            ideas, research, and curiosity, aiming to make
-                            complex scientific concepts more accessible while
-                            preserving their depth and rigor.
+                        <p className="text-lg text-text-muted leading-relaxed mt-8">
+                            The publication primarily focuses on the physical
+                            sciences, encompassing theory, experiment, pedagogy,
+                            and interdisciplinary applications. Content is
+                            written in a style that is rigorous yet accessible,
+                            maintaining academic integrity while remaining
+                            approachable at an undergraduate level.
+                        </p>
+                        <p className="text-lg text-text-muted leading-relaxed mt-4">
+                            The Confluence Chronicles operates on a periodic
+                            publication cycle. Submissions undergo an internal
+                            review process focused on clarity, coherence, and
+                            academic accuracy. The initiative functions as a
+                            not-for-profit educational platform, driven by
+                            collective academic interest and shared
+                            responsibility.
                         </p>
                     </div>
                 </div>
