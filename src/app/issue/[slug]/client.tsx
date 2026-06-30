@@ -577,9 +577,8 @@ const IssuePageClient = ({ issueFilled, reviews }: IssuePageClientProps) => {
                             </Button>
                             <ShareButton />
                             <a
-                                href="https://drive.google.com/drive/folders/1gtSepto45mLY-Srxmuc8zAK6CPtF92eD"
-                                target="_blank"
-                                rel="noopener noreferrer"
+                                href={issueFilled.downloadURL}
+                                download
                                 className={getActionElementStyles(
                                     "verticalOutline",
                                     "normal",

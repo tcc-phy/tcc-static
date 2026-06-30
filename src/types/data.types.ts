@@ -3,6 +3,14 @@ export type IssuePage = {
     imageUrl: string;
 }
 
+export const IssueVisibility = {
+    VISIBLE: "VISIBLE",
+    NOT_VISIBLE: "NOT_VISIBLE",
+} as const;
+
+export type IssueVisibility =
+    typeof IssueVisibility[keyof typeof IssueVisibility];
+
 export type Issue = {
     id: string;
     name: string;
@@ -11,6 +19,8 @@ export type Issue = {
     coverImageUrl: string | null;
     abstract: string;
     tags: string[];
+    visibility: IssueVisibility;
+    downloadURL: string;
     releaseDate: Date;
 }
 
@@ -22,7 +32,7 @@ export const ReviewStatus = {
     PENDING: "PENDING",
     APPROVED: "APPROVED",
     REJECTED: "REJECTED"
-};
+} as const;
 
 export type ReviewStatus = typeof ReviewStatus[keyof typeof ReviewStatus];
 
@@ -53,6 +63,7 @@ export const TeamName = {
     DESIGN: "DESIGN",
     OUTREACH: "OUTREACH",
     REPRESENTATIVE: "REPRESENTATIVE",
+    WEBSITE: "WEBSITE",
 } as const;
 
 export type TeamName = typeof TeamName[keyof typeof TeamName];

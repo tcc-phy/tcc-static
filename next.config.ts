@@ -19,9 +19,12 @@ const securityHeaders = [
             default-src 'self';
             script-src 'self' 'unsafe-inline' 'unsafe-eval';
             style-src 'self' 'unsafe-inline';
-            img-src 'self' data: https://res.cloudinary.com https://*.cloudinary.com;
+            img-src 'self' data:
+                https://res.cloudinary.com
+                https://*.cloudinary.com
+                https://media.licdn.com
+                https://*.licdn.com;
             font-src 'self' data: https://fonts.gstatic.com;
-            connect-src 'self' https://res.cloudinary.com https://*.cloudinary.com;
             `
             .replace(/\s+/g, " ")
             .trim(),
@@ -37,6 +40,10 @@ const nextConfig: NextConfig = {
             {
                 protocol: 'https',
                 hostname: 'res.cloudinary.com',
+            },
+            {
+                protocol: 'https',
+                hostname: 'media.licdn.com',
             },
         ],
     },

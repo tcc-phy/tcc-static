@@ -47,32 +47,38 @@ export type Database = {
         Row: {
           abstract: string
           coverImageUrl: string | null
+          downloadURL: string
           id: string
           name: string
           releaseDate: string
           slug: string
           tags: string[]
           title: string
+          visibility: Database["public"]["Enums"]["Visibility"]
         }
         Insert: {
           abstract: string
           coverImageUrl?: string | null
+          downloadURL?: string
           id?: string
           name: string
           releaseDate?: string
           slug: string
           tags?: string[]
           title: string
+          visibility?: Database["public"]["Enums"]["Visibility"]
         }
         Update: {
           abstract?: string
           coverImageUrl?: string | null
+          downloadURL?: string
           id?: string
           name?: string
           releaseDate?: string
           slug?: string
           tags?: string[]
           title?: string
+          visibility?: Database["public"]["Enums"]["Visibility"]
         }
         Relationships: []
       }
@@ -165,7 +171,8 @@ export type Database = {
     }
     Enums: {
       reviewStatus: "PENDING" | "APPROVED" | "REJECTED"
-      teamName: "REPRESENTATIVE" | "DESIGN" | "OUTREACH"
+      teamName: "REPRESENTATIVE" | "DESIGN" | "OUTREACH" | "WEBSITE"
+      Visibility: "VISIBLE" | "NOT_VISIBLE"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -294,7 +301,8 @@ export const Constants = {
   public: {
     Enums: {
       reviewStatus: ["PENDING", "APPROVED", "REJECTED"],
-      teamName: ["REPRESENTATIVE", "DESIGN", "OUTREACH"],
+      teamName: ["REPRESENTATIVE", "DESIGN", "OUTREACH", "WEBSITE"],
+      Visibility: ["VISIBLE", "NOT_VISIBLE"],
     },
   },
 } as const

@@ -1,10 +1,14 @@
 import sbClient from "@/database/client";
 import { Issue, IssueFilled } from "@/types/data.types";
 
+const visibleIssuesQuery = () =>
+    sbClient.from("issues").select("*").eq("visibility", "VISIBLE");
+
+const visibleIssueTagsQuery = () =>
+    sbClient.from("issues").select("tags").eq("visibility", "VISIBLE");
+
 const getAllIssues = async (): Promise<Issue[]> => {
-    const { data, error } = await sbClient
-        .from("issues")
-        .select("*")
+    const { data, error } = await visibleIssuesQuery()
         .order("releaseDate", { ascending: false });
 
     if (error) {
@@ -14,18 +18,16 @@ const getAllIssues = async (): Promise<Issue[]> => {
     return (data ?? []).map((issue) => {
         return {
             ...issue,
-            releaseDate: new Date(issue.releaseDate)
-        }
+            releaseDate: new Date(issue.releaseDate),
+        };
     });
-}
+};
 
 const getLatestIssue = async (): Promise<Issue | undefined> => {
-    const { data, error } = await sbClient
-        .from("issues")
-        .select("*")
+    const { data, error } = await visibleIssuesQuery()
         .order("releaseDate", { ascending: false })
         .limit(1)
-        .single();
+        .maybeSingle();
 
     if (error) {
         throw new Error(`Failed to fetch latest issue: ${error.message}`);
@@ -35,9 +37,9 @@ const getLatestIssue = async (): Promise<Issue | undefined> => {
 
     return {
         ...data,
-        releaseDate: new Date(data.releaseDate)
-    }
-}
+        releaseDate: new Date(data.releaseDate),
+    };
+};
 
 const getIssueBySlug = async (
     slug: string
@@ -49,6 +51,7 @@ const getIssueBySlug = async (
       issuePages (*)
     `)
         .eq("slug", slug)
+        .eq("visibility", "VISIBLE")
         .maybeSingle();
 
     if (error) {
@@ -65,9 +68,7 @@ const getIssueBySlug = async (
 };
 
 const getAllTags = async (): Promise<string[]> => {
-    const { data, error } = await sbClient
-        .from("issues")
-        .select("tags");
+    const { data, error } = await visibleIssueTagsQuery();
 
     if (error) {
         throw new Error(`Failed to fetch all tags: ${error.message}`);

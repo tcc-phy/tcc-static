@@ -79,6 +79,7 @@ const TeamPageClient = ({ team }: TeamPageClientProps) => {
         { label: "Representative", value: TeamName.REPRESENTATIVE },
         { label: "Outreach", value: TeamName.OUTREACH },
         { label: "Design", value: TeamName.DESIGN },
+        { label: "Website", value: TeamName.WEBSITE },
     ];
 
     const filteredMembers = team.filter(
